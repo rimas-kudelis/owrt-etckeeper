@@ -1,0 +1,30 @@
+--- a/Makefile
++++ b/Makefile
+@@ -31,15 +31,6 @@ install: etckeeper.version
+ 	$(INSTALL_DATA) $(CONFFILE) $(DESTDIR)$(etcdir)/etckeeper/etckeeper.conf
+ 	mkdir -p $(DESTDIR)$(bindir)
+ 	$(INSTALL_EXE) etckeeper $(DESTDIR)$(bindir)/etckeeper
+-	mkdir -p $(DESTDIR)$(mandir)/man8
+-	$(INSTALL_DATA) etckeeper.8 $(DESTDIR)$(mandir)/man8/etckeeper.8
+-	mkdir -p $(DESTDIR)$(bashcompletiondir)
+-	$(INSTALL_DATA) bash_completion $(DESTDIR)$(bashcompletiondir)/etckeeper
+-	mkdir -p $(DESTDIR)$(zshcompletiondir)
+-	$(INSTALL_DATA) zsh_completion $(DESTDIR)$(zshcompletiondir)/_etckeeper
+-	mkdir -p $(DESTDIR)$(systemddir)
+-	$(INSTALL_DATA) systemd/etckeeper.service $(DESTDIR)$(systemddir)/etckeeper.service
+-	$(INSTALL_DATA) systemd/etckeeper.timer $(DESTDIR)$(systemddir)/etckeeper.timer
+ ifeq ($(HIGHLEVEL_PACKAGE_MANAGER),apt)
+ 	mkdir -p $(DESTDIR)$(etcdir)/apt/apt.conf.d
+ 	$(INSTALL_DATA) apt.conf $(DESTDIR)$(etcdir)/apt/apt.conf.d/05etckeeper
+@@ -70,7 +61,10 @@ ifeq ($(HIGHLEVEL_PACKAGE_MANAGER),zyppe
+ 	mkdir -p $(DESTDIR)$(prefix)/lib/zypp/plugins/commit
+ 	$(INSTALL) zypper-etckeeper.py $(DESTDIR)$(prefix)/lib/zypp/plugins/commit/zypper-etckeeper.py
+ endif
+-	-$(PYTHON) ./etckeeper-bzr/__init__.py install --root=$(DESTDIR) ${PYTHON_INSTALL_OPTS} || echo "** bzr support not installed"
++ifeq ($(LOWLEVEL_PACKAGE_MANAGER),apk)
++	mkdir -p $(DESTDIR)$(etcdir)/apk/commit_hooks.d
++	$(INSTALL_EXE) apk_hook.sh $(DESTDIR)$(etcdir)/apk/commit_hooks.d/etckeeper
++endif
+ 	echo "** installation successful"
+ 
+ clean: etckeeper.spec etckeeper.version
