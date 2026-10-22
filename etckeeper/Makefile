@@ -22,7 +22,8 @@ define Package/etckeeper
   +coreutils-stat \
   +diffutils \
   +findutils-find \
-  +git
+  +git \
+  +grep
   PKGARCH:=all
 endef
 
@@ -34,7 +35,7 @@ define Package/etckeeper/description
  Upstream etckeeper supports several VCS backends, but this package assumes you will use git.
 endef
 
-define Package/conffiles
+define Package/etckeeper/conffiles
 /etc/etckeeper/
 endef
 
