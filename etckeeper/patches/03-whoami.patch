@@ -1,0 +1,11 @@
+--- a/commit.d/50vcs-commit
++++ b/commit.d/50vcs-commit
+@@ -54,7 +54,7 @@ if [ "$VCS" = git ] && [ -d .git ]; then
+ 	# has several edge cases where it fails and would prevent the
+ 	# commit.
+ 	if [ -z "$USER" ]; then
+-		USER="$(whoami)"
++		USER="$(whoami 2>/dev/null || id -un)"
+ 	fi
+ 	if [ -n "$USER" ]; then
+ 		# Use user.name and user.email from the gitconfig belonging

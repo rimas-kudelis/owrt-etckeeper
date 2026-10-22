@@ -16,17 +16,22 @@ include $(INCLUDE_DIR)/package.mk
 define Package/etckeeper
   SECTION:=admin
   CATEGORY:=Administration
-  TITLE:=Store your /etc in a VCS repository
+  TITLE:=Store your /etc in a git repository
   URL:=https://etckeeper.branchable.com/
+  DEPENDS:= \
+  +coreutils-stat \
+  +diffutils \
+  +findutils-find \
+  +git
   PKGARCH:=all
 endef
 
 define Package/etckeeper/description
- etckeeper is a tool to let /etc be stored in a Git, Mercurial, or Darcs repository.
+ etckeeper is a tool to let /etc be stored in a VCS repository.
  It hooks into apk to automatically commit changes made to /etc during package upgrades.
  It tracks file metadata that version control systems do not normally support, but that is important for /etc, such as the permissions of /etc/shadow.
  It's quite modular and configurable, while also being simple to use if you understand the basics of working with version control.
- etckeeper supports several VCS backends, so this package doesn't explicitly depend on git. You are expected to install it manually.
+ Upstream etckeeper supports several VCS backends, but this package assumes you will use git.
 endef
 
 define Package/conffiles

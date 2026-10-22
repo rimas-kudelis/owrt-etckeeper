@@ -5,7 +5,7 @@
  fi
  
 -hostname=`hostname 2>/dev/null || cat /etc/hostname`
-+hostname=`hostname 2>/dev/null || uname -n || cat /etc/hostname`
++hostname=`hostname 2>/dev/null || uname -n 2>/dev/null || cat /etc/hostname`
  hostname="${hostname%%.*}"
  dnsdomainname=`dnsdomainname 2>/dev/null || true`
  if [ -n "$dnsdomainname" ]; then
@@ -16,7 +16,7 @@
  set -e
  
 -description="$(hostname 2>/dev/null || cat /etc/hostname) /etc repository"
-+description="$(hostname 2>/dev/null || uname -n || cat /etc/hostname) /etc repository"
++description="$(hostname 2>/dev/null || uname -n 2>/dev/null || cat /etc/hostname) /etc repository"
  if [ "$VCS" = git ] && [ ! -e .git ]; then
  	git init
  	echo "$description" > .git/description
