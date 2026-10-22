@@ -22,8 +22,7 @@ define Package/etckeeper
   +coreutils-stat \
   +diffutils \
   +findutils-find \
-  +git \
-  +grep
+  +git
   PKGARCH:=all
 endef
 
