@@ -5,8 +5,7 @@ PKG_VERSION:=1.18.23
 PKG_RELEASE:=1
 
 PKG_LICENSE:=GPL-2.0-or-later
-PKG_LICENSE_FILES:=GPL
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_INSTALL:=1
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://distfiles.alpinelinux.org/distfiles/v3.25/
 PKG_SOURCE_DATE:=2025-08-16
@@ -31,13 +30,22 @@ define Package/etckeeper/description
 endef
 
 define Package/conffiles
-/etc/etckeeper/daily
-/etc/etckeeper/etckeeper.conf
-/etc/etckeeper/*
+/etc/etckeeper/
+endef
+
+define Build/Compile
+	# Do nothing: we're not building bzr or DNF support
 endef
 
 define Package/etckeeper/install
-	cd $(PKG_BUILD_DIR) && $(MAKE) install
+	ls -lR $(PKG_BUILD_DIR)
+	ls -lR $(PKG_INSTALL_DIR)
+	$(INSTALL_DIR) $(1)/etc
+	$(CP) $(PKG_INSTALL_DIR)/etc/etckeeper $(1)/etc/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/etckeeper $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc/apk/commit_hooks.d
+	$(INSTALL_BIN) ./files/apk.hook $(1)/etc/apk/commit_hooks.d/etckeeper
 endef
  
 $(eval $(call BuildPackage,etckeeper))

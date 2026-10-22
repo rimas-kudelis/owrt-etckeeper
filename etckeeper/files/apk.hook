@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ "$1" = "pre-commit" ]; then
+	if [ -x /usr/bin/etckeeper ]; then
+		/usr/bin/etckeeper pre-install
+	fi
+
+elif [ "$1" = "post-commit" ]; then
+	if [ -x /usr/bin/etckeeper ]; then
+		/usr/bin/etckeeper post-install
+	fi
+fi
