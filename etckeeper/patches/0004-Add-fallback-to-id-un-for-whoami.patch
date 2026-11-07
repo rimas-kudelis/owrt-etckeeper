@@ -1,3 +1,12 @@
+From b8321819084f79e4fdebf0ea375c5f2b89f510bb Mon Sep 17 00:00:00 2001
+From: Rimas Kudelis <rimas@kudelis.lt>
+Date: Fri, 6 Nov 2026 14:08:20 +0200
+Subject: Add fallback to `id -un` for `whoami`
+
+---
+ commit.d/50vcs-commit | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 --- a/commit.d/50vcs-commit
 +++ b/commit.d/50vcs-commit
 @@ -54,7 +54,7 @@ if [ "$VCS" = git ] && [ -d .git ]; then
